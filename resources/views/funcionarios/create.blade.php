@@ -5,7 +5,10 @@
 @section('conteudo')
 <div class="container-fluid shadow bg-white p-4">
 <h1>Cadastrar Funcionários</h1>
-<div class="row">
+<form class="row d-4" method="post" action="{{ route('funcionarios.store')}}" enctype="multipart/form-data">
+    @csrf
+    <input type="hidden" value="1" name="id_user">
+    <div class="row">
     <div class="col-4 mb-3">
         <label for="nome" class="form-label">Nome</label>
         <input type="text" name="nome" class="form-control form-control-lg bg-light" value="" required>
@@ -44,12 +47,24 @@
 <div class="row">
     <div class="col-4 mb-3">
         <label for="id_departamento" class="form-label">Departamento</label>
-        <input type="text" name="id_departamento" class="form-control form-control-lg bg-light" value="" required>
+        <select name="id_departamento" class="form-control form-control-lg bg-light" value="" required>
+        <option value="">--</option>
+        @foreach ($departamentos as $departamento)
+        <option value="{{ $departamento->id}}">{{ $departamento->nome}}</option>
+            
+        @endforeach
+        </select>
     </div>
 
     <div class="col-4 mb-3">
         <label for="id_cargo" class="form-label">Cargo</label>
-        <input type="text" name="id_cargo" class="form-control form-control-lg bg-light" value="" required>
+        <select name="id_cargo" class="form-control form-control-lg bg-light" value="" required>
+        <option value="">--</option>
+        @foreach ($cargos as $cargo)
+        <option value="{{ $cargo->id}}">{{ $cargo->descricao}}</option>
+            
+        @endforeach
+        </select>
     </div>
 
     <div class="col-4 mb-3">
@@ -63,7 +78,8 @@
         <!-- <label class="input-group-text" for="inputGroupFile02">Upload</label> -->
     </div>
 </div>
-<button type="button" class="btn btn-primary">Cadastrar</button>
-<button type="button" class="btn btn-danger">Cancelar</button>
+<button type="submit" class="btn btn-primary">Cadastrar</button>
+<a href="{{ route('funcionarios.index')}}" class="btn btn-danger btnl-lg">Cancelar</a>
 </div>
+</form>
 @endsection
